@@ -10,6 +10,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: measurements.SPACING_MEDIUN * 1.5,
+    paddingVertical: measurements.SPACING_MEDIUN * 1.5,
   },
   profilePicture: {
     width: measurements.WINDOW_WIDTH * 0.35,
@@ -32,12 +33,5 @@ export default StyleSheet.create({
   },
   loginButton: {
     marginTop: measurements.SPACING_SMALL,
-  },
-  registerLink: {
-    color: colors.BLACK,
-    textDecorationLine: 'underline',
-    fontSize: measurements.FONT_NORMAL,
-    textAlign: "right",
-    marginTop: measurements.SPACING_SMALL
   },
 });

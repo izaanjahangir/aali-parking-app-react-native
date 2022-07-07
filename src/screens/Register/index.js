@@ -6,28 +6,25 @@ import OutlineInput from '../../components/OutlineInput';
 import style from './style';
 import DefaultDP from '../../assets/default-dp.png';
 
-const Login = props => {
-  const goToRegister = () => {
-    props.navigation.navigate('Register');
-  };
-
+const Register = () => {
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View style={style.container}>
         <Image style={style.profilePicture} source={DefaultDP} />
-        <Text style={style.heading}>Welcome Back</Text>
-        <Text style={style.text}>Sign in to continue</Text>
+        <Text style={style.heading}>Welcome</Text>
+        <Text style={style.text}>Register your account</Text>
         <View style={style.form}>
+          <OutlineInput placeholder="Enter your first name" />
+          <OutlineInput placeholder="Enter your last name" />
+          <OutlineInput placeholder="Enter your NIC" />
           <OutlineInput placeholder="Enter your email" />
           <OutlineInput placeholder="Enter your password" />
-          <Button containerStyle={style.loginButton}>Login</Button>
-          <Text onPress={goToRegister} style={style.registerLink}>
-            Register here
-          </Text>
+          <OutlineInput placeholder="Enter your confirm password" />
+          <Button containerStyle={style.loginButton}>Register</Button>
         </View>
       </View>
     </ScrollView>
   );
 };
 
-export default Login;
+export default Register;
