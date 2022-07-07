@@ -4,9 +4,13 @@ import colors from '../../config/colors';
 import measurements from '../../config/measurements';
 
 export default StyleSheet.create({
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+  },
   container: {
     flex: 1,
-    backgroundColor: colors.LIGHT_GRAY,
+    // backgroundColor: colors.LIGHT_GRAY,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: measurements.SPACING_MEDIUN * 1.5,
@@ -19,7 +23,7 @@ export default StyleSheet.create({
   heading: {
     marginTop: measurements.SPACING_MEDIUN,
     fontSize: measurements.FONT_MEDIUM,
-    color: colors.BLACK,
+    color: colors.WHITE,
     fontWeight: 'bold',
   },
   form: {
@@ -28,16 +32,16 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: measurements.FONT_NORMAL,
-    color: colors.BLACK,
+    color: colors.WHITE,
   },
   loginButton: {
     marginTop: measurements.SPACING_SMALL,
   },
   registerLink: {
-    color: colors.BLACK,
+    color: colors.WHITE,
     textDecorationLine: 'underline',
     fontSize: measurements.FONT_NORMAL,
-    textAlign: "right",
-    marginTop: measurements.SPACING_SMALL
+    textAlign: 'right',
+    marginTop: measurements.SPACING_SMALL,
   },
 });

@@ -6,7 +6,8 @@ export default StyleSheet.create({
   container: {
     width: "100%",
     minHeight: 40,
-    borderColor: colors.DARK_GRAY,
+    borderColor: colors.WHITE,
+    color: colors.WHITE,
     borderWidth: 1,
     paddingHorizontal: measurements.SPACING_SMALL,
     paddingVertical: measurements.SPACING_SMALL * 0.7,
