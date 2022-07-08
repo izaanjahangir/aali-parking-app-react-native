@@ -13,6 +13,10 @@ const Login = props => {
     props.navigation.navigate('Register');
   };
 
+  const handleLogin = () => {
+    props.navigation.navigate('Home');
+  };
+
   return (
     <MapBackground>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -23,7 +27,9 @@ const Login = props => {
           <View style={style.form}>
             <OutlineInput placeholder="Enter your email" />
             <OutlineInput placeholder="Enter your password" />
-            <Button containerStyle={style.loginButton}>Login</Button>
+            <Button onPress={handleLogin} containerStyle={style.loginButton}>
+              Login
+            </Button>
             <Text onPress={goToRegister} style={style.registerLink}>
               Register here
             </Text>

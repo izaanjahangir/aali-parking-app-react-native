@@ -14,7 +14,7 @@ const Button = props => {
 
   return (
     <Ripple onPress={handlePress} style={[style.container, props.containerStyle]}>
-      <Text style={style.text}>{props.children}</Text>
+      <Text style={[style.text, props.textStyle]}>{props.children}</Text>
     </Ripple>
   );
 };

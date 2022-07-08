@@ -2,6 +2,7 @@ import React from 'react';
 import {NativeBaseProvider} from 'native-base';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {LogBox} from 'react-native';
 
 import Navigation from './src/navigation';
 
@@ -12,6 +13,9 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     flex: 1,
   };
+  
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs(); //Ignore all log notifications
 
   return (
     <SafeAreaView style={backgroundStyle}>

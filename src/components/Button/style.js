@@ -8,7 +8,9 @@ export default StyleSheet.create({
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 7
+    borderRadius: 7,
+    paddingLeft: measurements.SPACING_SMALL * 1.2,
+    paddingRight: measurements.SPACING_SMALL * 1.2,
   },
   text: {
     color: colors.WHITE,
