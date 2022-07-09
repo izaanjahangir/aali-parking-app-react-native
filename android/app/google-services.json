@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "325132345350",
+    "project_id": "aali-fyp-parking-app",
+    "storage_bucket": "aali-fyp-parking-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325132345350:android:1be96b35fecb68f0ade387",
+        "android_client_info": {
+          "package_name": "com.parkingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325132345350-0jtsh0pho7g3m3mihvurgl0knjp88o27.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOsVW9UuXric2zlsEVyyZ5Mr2s6sjSSJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325132345350-0jtsh0pho7g3m3mihvurgl0knjp88o27.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
