@@ -1,20 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image, ScrollView, ImageBackground} from 'react-native';
 
 import Button from '../../components/Button';
 import OutlineInput from '../../components/OutlineInput';
 import style from './style';
 import DefaultDP from '../../assets/default-dp.png';
-import MapImage from '../../assets/map.png';
 import MapBackground from '../../components/MapBackground';
+import ErrorBox from '../../components/ErrorBox';
 
 const Login = props => {
+  const [errorMessage, setErrorMessage] = useState('');
   const goToRegister = () => {
     props.navigation.navigate('Register');
   };
 
   const handleLogin = () => {
-    props.navigation.navigate('Drawer');
+    setErrorMessage('This is a message');
+    // props.navigation.navigate('Drawer');
   };
 
   return (
@@ -36,6 +38,7 @@ const Login = props => {
           </View>
         </View>
       </ScrollView>
+      <ErrorBox onDone={() => setErrorMessage('')} message={errorMessage} />
     </MapBackground>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, ActivityIndicator} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 
 import colors from '../../config/colors';
@@ -13,8 +13,14 @@ const Button = props => {
   };
 
   return (
-    <Ripple onPress={handlePress} style={[style.container, props.containerStyle]}>
-      <Text style={[style.text, props.textStyle]}>{props.children}</Text>
+    <Ripple
+      onPress={handlePress}
+      style={[style.container, props.containerStyle]}>
+      {props.loading ? (
+        <ActivityIndicator size={25} color={colors.WHITE} />
+      ) : (
+        <Text style={[style.text, props.textStyle]}>{props.children}</Text>
+      )}
     </Ripple>
   );
 };
