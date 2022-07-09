@@ -4,7 +4,11 @@ import measurements from '../../config/measurements';
 
 export default StyleSheet.create({
   container: {
-    width: "100%",
+    marginTop: measurements.SPACING_SMALL,
+    marginBottom: measurements.SPACING_SMALL,
+  },
+  input: {
+    width: '100%',
     minHeight: 40,
     borderColor: colors.WHITE,
     color: colors.WHITE,
@@ -13,7 +17,14 @@ export default StyleSheet.create({
     paddingVertical: measurements.SPACING_SMALL * 0.7,
     borderRadius: 5,
     fontSize: measurements.FONT_SMALL,
-    marginTop: measurements.SPACING_SMALL,
-    marginBottom: measurements.SPACING_SMALL,
+  },
+  errorInput: {
+    borderColor: colors.RED,
+    borderWidth: 1
+  },
+  errorMessage: {
+    color: colors.RED,
+    paddingLeft: 10,
+    fontSize: measurements.FONT_SMALL,
   },
 });
