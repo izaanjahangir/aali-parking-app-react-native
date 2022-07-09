@@ -1,6 +1,5 @@
-import {View} from 'native-base';
 import React from 'react';
-import {ImageBackground} from 'react-native';
+import {ImageBackground, View} from 'react-native';
 
 import MapImage from '../../assets/map.png';
 import style from './style';

@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {View, Text, Image, ScrollView} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {useDispatch} from 'react-redux';
 
-import ErrorBox from '../../components/ErrorBox';
-import SuccessBox from '../../components/SuccessBox';
+import messageBoxActions from '../../redux/messageBox/action';
 import MapBackground from '../../components/MapBackground';
 import Button from '../../components/Button';
 import OutlineInput from '../../components/OutlineInput';
@@ -19,9 +19,8 @@ const Register = props => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
+  const dispatch = useDispatch();
 
   const goToLogin = () => {
     props.navigation.goBack();
@@ -86,10 +85,17 @@ const Register = props => {
         .doc(response.user.uid)
         .set(newUser, {merge: true});
 
-      setSuccessMessage('Registeration is successful. You can login now');
       goToLogin();
+      dispatch(
+        messageBoxActions.setMessage({
+          type: 'success',
+          message: 'Registeration is successful. You can login now',
+        }),
+      );
     } catch (e) {
-      setErrorMessage(e.message);
+      dispatch(
+        messageBoxActions.setMessage({type: 'error', message: e.message}),
+      );
     }
 
     setLoading(false);
@@ -151,11 +157,6 @@ const Register = props => {
           </View>
         </View>
       </ScrollView>
-      <ErrorBox message={errorMessage} onDone={() => setErrorMessage('')} />
-      <SuccessBox
-        message={successMessage}
-        onDone={() => setSuccessMessage('')}
-      />
     </MapBackground>
   );
 };
