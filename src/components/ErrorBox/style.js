@@ -41,6 +41,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   message: {
+    marginTop: measurements.SPACING_SMALL,
     color: colors.BLACK,
     fontSize: measurements.FONT_NORMAL,
     textAlign: 'center',
