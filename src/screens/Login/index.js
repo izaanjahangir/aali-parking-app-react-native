@@ -14,7 +14,7 @@ const Login = props => {
   };
 
   const handleLogin = () => {
-    props.navigation.navigate('Home');
+    props.navigation.navigate('Drawer');
   };
 
   return (

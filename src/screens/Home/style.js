@@ -14,10 +14,19 @@ export default StyleSheet.create({
   },
   headingContainer: {
     paddingBottom: measurements.SPACING_MEDIUN,
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  menuIcon: {
+    width: measurements.WINDOW_WIDTH * 0.08,
+    height: measurements.WINDOW_WIDTH * 0.08,
   },
   heading: {
     fontSize: measurements.FONT_MEDIUM,
     color: colors.WHITE,
+    flex: 1,
+    textAlign: 'center',
   },
   slotContainer: {
     marginTop: measurements.SPACING_MEDIUN,

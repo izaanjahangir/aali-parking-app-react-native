@@ -1,20 +1,28 @@
 import React, {useState} from 'react';
-import {View, ScrollView, Text} from 'react-native';
+import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 
 import style from './style';
 import ParkingSlot from '../../components/ParkingSlot';
 import MapBackground from '../../components/MapBackground';
 import Button from '../../components/Button';
 import colors from '../../config/colors';
+import MenuIcon from '../../assets/menu.png';
 
 const Home = props => {
   const [selectedIndex, setSelectedIndex] = useState(4);
   const reservedSlots = [5, 8, 2];
 
+  const openDrawer = () => {
+    props.navigation.openDrawer();
+  };
+
   return (
     <MapBackground>
       <View style={style.container}>
         <View style={style.headingContainer}>
+          <TouchableOpacity onPress={openDrawer}>
+            <Image source={MenuIcon} style={style.menuIcon} />
+          </TouchableOpacity>
           <Text style={style.heading}>Pick a parking slot</Text>
         </View>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
