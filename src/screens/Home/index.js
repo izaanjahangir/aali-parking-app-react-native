@@ -1,21 +1,91 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import {useSelector, useDispatch} from 'react-redux';
+import moment from 'moment';
 
-import style from './style';
+import colors from '../../config/colors';
+import messageBoxActions from '../../redux/messageBox/action';
 import ParkingSlot from '../../components/ParkingSlot';
 import MapBackground from '../../components/MapBackground';
 import Button from '../../components/Button';
-import colors from '../../config/colors';
 import MenuIcon from '../../assets/menu.png';
+import style from './style';
 
 const Home = props => {
-  const [selectedIndex, setSelectedIndex] = useState(4);
-  const reservedSlots = [5, 8, 2];
+  const slots = useSelector(store => store.config.slots);
+  const user = useSelector(store => store.auth.user);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [bookedSlot, setBookedSlot] = useState(null);
+  const [reservedSlots, setReservedSlots] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const foundSlot = slots.find(item => item.bookedBy === user.id);
+    const reservedSlots = slots.filter(
+      item => item.bookedBy && item.bookedBy !== user.id,
+    );
+    setBookedSlot(foundSlot);
+    setReservedSlots(reservedSlots);
+
+    console.log(reservedSlots);
+  }, [slots]);
 
   const openDrawer = () => {
     props.navigation.openDrawer();
   };
 
+  const handleParkHere = async () => {
+    try {
+      setLoading(true);
+
+      const alreadyBookedSlots = await firestore()
+        .collection('slots')
+        .where('bookedBy', '==', user.id)
+        .get();
+
+      if (!alreadyBookedSlots.empty) {
+        throw new Error('You have already booked slot. Please free it first');
+      }
+
+      await firestore().collection('slots').doc(selectedSlot).set(
+        {
+          bookedBy: user.id,
+          bookedTime: firestore.FieldValue.serverTimestamp(),
+        },
+        {merge: true},
+      );
+      setSelectedSlot(null);
+    } catch (e) {
+      dispatch(
+        messageBoxActions.setMessage({type: 'error', message: e.message}),
+      );
+    }
+
+    setLoading(false);
+  };
+
+  const handleFreeSlot = async () => {
+    try {
+      setLoading(true);
+
+      await firestore()
+        .collection('slots')
+        .doc(bookedSlot.id)
+        .set({bookedBy: null, bookedTime: null}, {merge: true});
+
+      dispatch(
+        messageBoxActions.setMessage({type: 'success', message: 'Slot freed'}),
+      );
+    } catch (e) {
+      dispatch(
+        messageBoxActions.setMessage({type: 'error', message: e.message}),
+      );
+    }
+
+    setLoading(false);
+  };
   return (
     <MapBackground>
       <View style={style.container}>
@@ -26,35 +96,59 @@ const Home = props => {
           <Text style={style.heading}>Pick a parking slot</Text>
         </View>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          <View style={style.slotContainer}>
-            {new Array(30).fill(0).map((_, index) => (
+          <View style={[style.slotContainer, bookedSlot && {opacity: 0.15}]}>
+            {slots.map(item => (
               <ParkingSlot
-                reserved={reservedSlots.includes(index)}
-                selected={selectedIndex === index}
-                key={index}>
-                Slot {index + 1}
+                onPress={() => {
+                  if (item.id === selectedSlot) {
+                    setSelectedSlot(null);
+                  } else {
+                    setSelectedSlot(item.id);
+                  }
+                }}
+                disabled={bookedSlot}
+                reserved={reservedSlots.some(reservedS => reservedS.id === item.id)}
+                selected={selectedSlot === item.id}
+                key={item.id}>
+                {item.label}
               </ParkingSlot>
             ))}
           </View>
         </ScrollView>
-        <View style={style.parkedMainContainer}>
-          <View style={style.parkedContainer}>
-            <Text style={style.yourParkedText}>You have parked in slot 05</Text>
-            <Text style={style.yourParkedDate}>Time: 12:00pm</Text>
-            <Text style={style.reminderText}>
-              Remember to free your slot after you are done
-            </Text>
+        {bookedSlot && (
+          <View style={style.parkedMainContainer}>
+            <View style={style.parkedContainer}>
+              <Text style={style.yourParkedText}>
+                You have parked in {bookedSlot.label}
+              </Text>
+              <Text style={style.yourParkedDate}>
+                Time:{' '}
+                {moment(bookedSlot.bookedTime?.toDate()).format('hh:mm A')}
+              </Text>
+              <Text style={style.reminderText}>
+                Remember to free your slot after you are done
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
         <View style={style.buttonContainer}>
-          {/* <Button onPress={() => alert('asd')} containerStyle={{width: '100%'}}>
-            I PARK HERE
-          </Button> */}
-          <Button
-            onPress={() => alert('asd')}
-            containerStyle={{width: '100%', backgroundColor: colors.RED}}>
-            Free your slot
-          </Button>
+          {!bookedSlot && (
+            <Button
+              loading={loading}
+              disabled={!selectedSlot}
+              onPress={handleParkHere}
+              containerStyle={{width: '100%'}}>
+              I PARK HERE
+            </Button>
+          )}
+          {bookedSlot && (
+            <Button
+              loading={loading}
+              onPress={handleFreeSlot}
+              containerStyle={{width: '100%', backgroundColor: colors.RED}}>
+              Free your slot
+            </Button>
+          )}
         </View>
       </View>
     </MapBackground>

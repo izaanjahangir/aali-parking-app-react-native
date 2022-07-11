@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector, useDispatch} from 'react-redux';
 
+import configActions from '../redux/config/action';
 import messageBoxActions from '../redux/messageBox/action';
 import ErrorBox from '../components/ErrorBox';
 import SuccessBox from '../components/SuccessBox';
@@ -16,6 +17,10 @@ const Navigation = () => {
   const messageBox = useSelector(state => state.messageBox);
   const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(configActions.fetchSlots());
+  }, []);
 
   return (
     <>

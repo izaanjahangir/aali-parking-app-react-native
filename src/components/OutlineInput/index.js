@@ -8,6 +8,7 @@ const OutlineInput = props => {
   return (
     <View style={style.container}>
       <TextInput
+        secureTextEntry={props.secureTextEntry}
         value={props.value}
         onChangeText={props.onChange}
         placeholderTextColor={colors.WHITE}

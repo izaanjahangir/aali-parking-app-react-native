@@ -83,6 +83,7 @@ const Login = props => {
               placeholder="Enter your email"
             />
             <OutlineInput
+              secureTextEntry={true}
               value={password}
               errorMessage={validationErrors.password}
               onChange={e => handleTextChange(e, setPassword)}

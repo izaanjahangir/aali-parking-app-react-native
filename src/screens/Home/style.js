@@ -33,7 +33,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    opacity: 0.15,
+    // opacity: 0.15,
   },
   buttonContainer: {
     paddingTop: measurements.SPACING_MEDIUN,

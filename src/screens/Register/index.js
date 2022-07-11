@@ -134,12 +134,14 @@ const Register = props => {
               placeholder="Enter your email"
             />
             <OutlineInput
+              secureTextEntry={true}
               errorMessage={validationErrors.password}
               value={password}
               onChange={e => handleTextChange(e, setPassword)}
               placeholder="Enter your password"
             />
             <OutlineInput
+              secureTextEntry={true}
               errorMessage={validationErrors.confirmPassword}
               value={confirmPassword}
               onChange={e => handleTextChange(e, setConfirmPassword)}

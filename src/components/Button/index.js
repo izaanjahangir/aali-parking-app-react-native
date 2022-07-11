@@ -15,7 +15,11 @@ const Button = props => {
   return (
     <Ripple
       onPress={handlePress}
-      style={[style.container, props.containerStyle]}>
+      style={[
+        style.container,
+        props.containerStyle,
+        props.disabled && {opacity: 0.2},
+      ]}>
       {props.loading ? (
         <ActivityIndicator size={25} color={colors.WHITE} />
       ) : (
