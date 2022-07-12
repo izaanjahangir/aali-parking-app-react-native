@@ -40,13 +40,19 @@ const Home = props => {
     try {
       setLoading(true);
 
-      const alreadyBookedSlots = await firestore()
-        .collection('slots')
-        .where('bookedBy', '==', user.id)
-        .get();
+      const promises = [
+        firestore().collection('slots').where('bookedBy', '==', user.id).get(),
+        firestore().collection('slots').doc(selectedSlot).get(),
+      ];
+      const alreadyBookedSlots = await promises[0];
+      const isSlotBooked = await promises[1];
 
       if (!alreadyBookedSlots.empty) {
         throw new Error('You have already booked slot. Please free it first');
+      }
+
+      if (isSlotBooked.data().bookedBy) {
+        throw new Error('This slot is already booked by someone');
       }
 
       await firestore().collection('slots').doc(selectedSlot).set(
@@ -106,8 +112,13 @@ const Home = props => {
                     setSelectedSlot(item.id);
                   }
                 }}
-                disabled={bookedSlot}
-                reserved={reservedSlots.some(reservedS => reservedS.id === item.id)}
+                disabled={
+                  bookedSlot ||
+                  reservedSlots.some(reservedS => reservedS.id === item.id)
+                }
+                reserved={reservedSlots.some(
+                  reservedS => reservedS.id === item.id,
+                )}
                 selected={selectedSlot === item.id}
                 key={item.id}>
                 {item.label}
