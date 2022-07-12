@@ -92,6 +92,17 @@ const Home = props => {
 
     setLoading(false);
   };
+
+  console.log('bookedSlot =>', bookedSlot);
+
+  const renderDate = bookedTime => {
+    if (bookedTime?.toDate) {
+      return moment(bookedTime?.toDate()).format('hh:mm A');
+    }
+
+    return '';
+  };
+
   return (
     <MapBackground>
       <View style={style.container}>
@@ -133,8 +144,7 @@ const Home = props => {
                 You have parked in {bookedSlot.label}
               </Text>
               <Text style={style.yourParkedDate}>
-                Time:{' '}
-                {moment(bookedSlot.bookedTime?.toDate()).format('hh:mm A')}
+                Time: {renderDate(bookedSlot.bookedTime)}
               </Text>
               <Text style={style.reminderText}>
                 Remember to free your slot after you are done
