@@ -77,7 +77,7 @@ const Register = props => {
         nic,
       };
       const response = await auth().createUserWithEmailAndPassword(
-        email,
+        email.trim(),
         password,
       );
       await firestore()

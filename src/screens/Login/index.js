@@ -45,7 +45,10 @@ const Login = props => {
         throw new Error('Please fix errors');
       }
 
-      const response = await auth().signInWithEmailAndPassword(email, password);
+      const response = await auth().signInWithEmailAndPassword(
+        email.trim(),
+        password,
+      );
       const user = await firestore()
         .collection('users')
         .doc(response.user.uid)
