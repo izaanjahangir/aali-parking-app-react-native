@@ -3,6 +3,7 @@ import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
+import database from '@react-native-firebase/database';
 
 import colors from '../../config/colors';
 import messageBoxActions from '../../redux/messageBox/action';
@@ -28,8 +29,6 @@ const Home = props => {
     );
     setBookedSlot(foundSlot);
     setReservedSlots(reservedSlots);
-
-    console.log(reservedSlots);
   }, [slots]);
 
   const openDrawer = () => {
@@ -53,6 +52,23 @@ const Home = props => {
 
       if (isSlotBooked.data().bookedBy) {
         throw new Error('This slot is already booked by someone');
+      }
+
+      const slotData = isSlotBooked.data();
+
+      if (!slotData) {
+        throw new Error('Something went wrong');
+      }
+
+      const RTDataResponse = await database()
+        .ref(`/SLOT NO ${slotData.code}= `)
+        .once('value');
+      const RTData = RTDataResponse.val();
+
+      if (!RTData || Number(RTData) === 0) {
+        throw new Error(
+          'Sensor detected no object on this slot. Please first park here then try again',
+        );
       }
 
       await firestore().collection('slots').doc(selectedSlot).set(
@@ -92,8 +108,6 @@ const Home = props => {
 
     setLoading(false);
   };
-
-  console.log('bookedSlot =>', bookedSlot);
 
   const renderDate = bookedTime => {
     if (bookedTime?.toDate) {
